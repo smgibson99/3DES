@@ -1,8 +1,16 @@
 #include <stdio.h>
 #include <string.h>
+#include <memory.h>
 
 #include "3DES.h"
 #include "base64.h"
+
+static unsigned char keyData[24] = {
+        83, 97, 98, 71, 97, 110, 100, 97, 72, 97,
+        105, 33, 80, 97, 114, 68, 97, 110, 100, 104,
+        97, 72, 97, 105 };
+
+static unsigned char e1PIV[8] = { 50, 51, 52, 53, 54, 55, 56, 57 };
 
 int main(int argc, char**argv) {
 
@@ -36,7 +44,11 @@ int main(int argc, char**argv) {
 	unsigned char *cipherText = NULL;
 
 	printf("Clear Text to encrypt: %s\n", clearText);
-    result = des3_cbc_encrypt(cipher, clearText, textLength, keyString, keyLength, iv);
+
+	keyLength = sizeof(keyData);
+
+	memcpy(iv, e1PIV, 8);
+    result = des3_cbc_encrypt(cipher, clearText, textLength, keyData, 24, iv);
   	cipherLength = strlen(cipher);
 	
 	cipherText = base64_encode(cipher, cipherLength, &cipherLength);
@@ -46,7 +58,7 @@ int main(int argc, char**argv) {
 	clearText[0] = '\0';
 	cipherLength = strlen(cipher);
 
-    result = des3_cbc_decrypt(clearText, cipher, cipherLength, keyString, keyLength, iv2);
+    result = des3_cbc_decrypt(clearText, cipher, cipherLength, keyData, 24, iv2);
 
 	printf("Clear Text back from decryption: %s\n", clearText);
 
