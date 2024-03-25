@@ -1,0 +1,3 @@
+Z:/repos/3DES/3DES/out/build/x64-debug/CMakeFiles/3DES.dir
+Z:/repos/3DES/3DES/out/build/x64-debug/CMakeFiles/edit_cache.dir
+Z:/repos/3DES/3DES/out/build/x64-debug/CMakeFiles/rebuild_cache.dir
